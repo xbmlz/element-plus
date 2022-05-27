@@ -60,7 +60,5 @@
   "packages/hooks/use-forward-ref/",
   "packages/hooks/use-global-config/",
   "packages/hooks/use-prop/",
-  "packages/make-installer.ts",
-  "packages/utils/dom/",
-  "packages/utils/vue/"
+  "packages/make-installer.ts"
 ]
