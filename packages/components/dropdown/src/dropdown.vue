@@ -1,81 +1,3 @@
-<template>
-  <div :class="[ns.b(), ns.is('disabled', disabled)]">
-    <el-tooltip
-      ref="popperRef"
-      :effect="effect"
-      :fallback-placements="['bottom', 'top']"
-      :popper-options="popperOptions"
-      :gpu-acceleration="false"
-      :hide-after="trigger === 'hover' ? hideTimeout : 0"
-      :manual-mode="true"
-      :placement="placement"
-      :popper-class="[ns.e('popper'), popperClass]"
-      :reference-element="referenceElementRef?.$el"
-      :trigger="trigger"
-      :show-after="trigger === 'hover' ? showTimeout : 0"
-      :stop-popper-mouse-event="false"
-      :virtual-ref="triggeringElementRef"
-      :virtual-triggering="splitButton"
-      :disabled="disabled"
-      :transition="`${ns.namespace.value}-zoom-in-top`"
-      teleported
-      pure
-      persistent
-      @show="$emit('visible-change', true)"
-      @hide="$emit('visible-change', false)"
-    >
-      <template #content>
-        <el-scrollbar
-          ref="scrollbar"
-          :wrap-style="wrapStyle"
-          tag="div"
-          :view-class="ns.e('list')"
-        >
-          <el-roving-focus-group
-            :loop="loop"
-            :current-tab-id="currentTabId"
-            orientation="horizontal"
-            @current-tab-id-change="handleCurrentTabIdChange"
-            @entry-focus="handleEntryFocus"
-          >
-            <el-dropdown-collection>
-              <slot name="dropdown" />
-            </el-dropdown-collection>
-          </el-roving-focus-group>
-        </el-scrollbar>
-      </template>
-      <template v-if="!splitButton" #default>
-        <div :class="dropdownTriggerKls">
-          <slot name="default" />
-        </div>
-      </template>
-    </el-tooltip>
-    <template v-if="splitButton">
-      <el-button-group>
-        <el-button
-          ref="referenceElementRef"
-          v-bind="buttonProps"
-          :size="dropdownSize"
-          :type="type"
-          :disabled="disabled"
-          @click="handlerMainButtonClick"
-        >
-          <slot name="default" />
-        </el-button>
-        <el-button
-          ref="triggeringElementRef"
-          v-bind="buttonProps"
-          :size="dropdownSize"
-          :type="type"
-          :class="ns.e('caret-button')"
-          :disabled="disabled"
-        >
-          <el-icon :class="ns.e('icon')"><arrow-down /></el-icon>
-        </el-button>
-      </el-button-group>
-    </template>
-  </div>
-</template>
 <script lang="ts">
 import {
   computed,
@@ -219,3 +141,81 @@ export default defineComponent({
   },
 })
 </script>
+<template>
+  <div :class="[ns.b(), ns.is('disabled', disabled)]">
+    <el-tooltip
+      ref="popperRef"
+      :effect="effect"
+      :fallback-placements="['bottom', 'top']"
+      :popper-options="popperOptions"
+      :gpu-acceleration="false"
+      :hide-after="trigger === 'hover' ? hideTimeout : 0"
+      :manual-mode="true"
+      :placement="placement"
+      :popper-class="[ns.e('popper'), popperClass]"
+      :reference-element="referenceElementRef?.$el"
+      :trigger="trigger"
+      :show-after="trigger === 'hover' ? showTimeout : 0"
+      :stop-popper-mouse-event="false"
+      :virtual-ref="triggeringElementRef"
+      :virtual-triggering="splitButton"
+      :disabled="disabled"
+      :transition="`${ns.namespace.value}-zoom-in-top`"
+      teleported
+      pure
+      persistent
+      @show="$emit('visible-change', true)"
+      @hide="$emit('visible-change', false)"
+    >
+      <template #content>
+        <el-scrollbar
+          ref="scrollbar"
+          :wrap-style="wrapStyle"
+          tag="div"
+          :view-class="ns.e('list')"
+        >
+          <el-roving-focus-group
+            :loop="loop"
+            :current-tab-id="currentTabId"
+            orientation="horizontal"
+            @current-tab-id-change="handleCurrentTabIdChange"
+            @entry-focus="handleEntryFocus"
+          >
+            <el-dropdown-collection>
+              <slot name="dropdown" />
+            </el-dropdown-collection>
+          </el-roving-focus-group>
+        </el-scrollbar>
+      </template>
+      <template v-if="!splitButton" #default>
+        <div :class="dropdownTriggerKls">
+          <slot name="default" />
+        </div>
+      </template>
+    </el-tooltip>
+    <template v-if="splitButton">
+      <el-button-group>
+        <el-button
+          ref="referenceElementRef"
+          v-bind="buttonProps"
+          :size="dropdownSize"
+          :type="type"
+          :disabled="disabled"
+          @click="handlerMainButtonClick"
+        >
+          <slot name="default" />
+        </el-button>
+        <el-button
+          ref="triggeringElementRef"
+          v-bind="buttonProps"
+          :size="dropdownSize"
+          :type="type"
+          :class="ns.e('caret-button')"
+          :disabled="disabled"
+        >
+          <el-icon :class="ns.e('icon')"><arrow-down /></el-icon>
+        </el-button>
+      </el-button-group>
+    </template>
+  </div>
+</template>

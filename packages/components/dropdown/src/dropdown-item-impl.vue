@@ -1,28 +1,3 @@
-<template>
-  <li
-    v-if="divided"
-    :class="ns.bem('menu', 'item', 'divided')"
-    v-bind="$attrs"
-  />
-  <li
-    :ref="itemRef"
-    v-bind="{ ...dataset, ...$attrs }"
-    :aria-disabled="disabled"
-    :class="[ns.be('menu', 'item'), ns.is('disabled', disabled)]"
-    :tabindex="tabIndex"
-    role="menuitem"
-    @click="(e) => $emit('clickimpl', e)"
-    @focus="handleFocus"
-    @keydown="handleKeydown"
-    @mousedown="handleMousedown"
-    @pointermove="(e) => $emit('pointermove', e)"
-    @pointerleave="(e) => $emit('pointerleave', e)"
-  >
-    <el-icon v-if="icon"><component :is="icon" /></el-icon>
-    <slot />
-  </li>
-</template>
-
 <script lang="ts">
 import { defineComponent, inject } from 'vue'
 import {
@@ -97,3 +72,28 @@ export default defineComponent({
   },
 })
 </script>
+
+<template>
+  <li
+    v-if="divided"
+    :class="ns.bem('menu', 'item', 'divided')"
+    v-bind="$attrs"
+  />
+  <li
+    :ref="itemRef"
+    v-bind="{ ...dataset, ...$attrs }"
+    :aria-disabled="disabled"
+    :class="[ns.be('menu', 'item'), ns.is('disabled', disabled)]"
+    :tabindex="tabIndex"
+    role="menuitem"
+    @click="(e) => $emit('clickimpl', e)"
+    @focus="handleFocus"
+    @keydown="handleKeydown"
+    @mousedown="handleMousedown"
+    @pointermove="(e) => $emit('pointermove', e)"
+    @pointerleave="(e) => $emit('pointerleave', e)"
+  >
+    <el-icon v-if="icon"><component :is="icon" /></el-icon>
+    <slot />
+  </li>
+</template>

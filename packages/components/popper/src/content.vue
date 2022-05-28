@@ -1,31 +1,3 @@
-<template>
-  <div
-    ref="popperContentRef"
-    :style="contentStyle"
-    :class="contentClass"
-    :role="role"
-    :aria-label="ariaLabel"
-    :aria-modal="ariaModal"
-    tabindex="-1"
-    @mouseenter="(e) => $emit('mouseenter', e)"
-    @mouseleave="(e) => $emit('mouseleave', e)"
-  >
-    <el-focus-trap
-      :trapped="trapped"
-      :trap-on-focus-in="true"
-      :focus-trap-el="popperContentRef"
-      :focus-start-el="focusStartRef"
-      @focus-after-trapped="onFocusAfterTrapped"
-      @focus-after-released="onFocusAfterReleased"
-      @focusin="onFocusInTrap"
-      @focusout-prevented="onFocusoutPrevented"
-      @release-requested="onReleaseRequested"
-    >
-      <slot />
-    </el-focus-trap>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed, inject, onMounted, provide, ref, unref, watch } from 'vue'
 import { NOOP } from '@vue/shared'
@@ -42,13 +14,13 @@ import { buildPopperOptions, unwrapMeasurableEl } from './utils'
 
 import type { WatchStopHandle } from 'vue'
 
-defineOptions({
-  name: 'ElPopperContent',
-})
+const props = defineProps(usePopperContentProps)
 
 const emit = defineEmits(usePopperContentEmits)
 
-const props = defineProps(usePopperContentProps)
+defineOptions({
+  name: 'ElPopperContent',
+})
 
 const { popperInstanceRef, contentRef, triggerRef, role } = inject(
   POPPER_INJECTION_KEY,
@@ -226,3 +198,31 @@ defineExpose({
   contentStyle,
 })
 </script>
+
+<template>
+  <div
+    ref="popperContentRef"
+    :style="contentStyle"
+    :class="contentClass"
+    :role="role"
+    :aria-label="ariaLabel"
+    :aria-modal="ariaModal"
+    tabindex="-1"
+    @mouseenter="(e) => $emit('mouseenter', e)"
+    @mouseleave="(e) => $emit('mouseleave', e)"
+  >
+    <el-focus-trap
+      :trapped="trapped"
+      :trap-on-focus-in="true"
+      :focus-trap-el="popperContentRef"
+      :focus-start-el="focusStartRef"
+      @focus-after-trapped="onFocusAfterTrapped"
+      @focus-after-released="onFocusAfterReleased"
+      @focusin="onFocusInTrap"
+      @focusout-prevented="onFocusoutPrevented"
+      @release-requested="onReleaseRequested"
+    >
+      <slot />
+    </el-focus-trap>
+  </div>
+</template>

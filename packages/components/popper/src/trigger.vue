@@ -1,17 +1,3 @@
-<template>
-  <el-only-child
-    v-if="!virtualTriggering"
-    v-bind="$attrs"
-    :aria-controls="ariaControls"
-    :aria-describedby="ariaDescribedby"
-    :aria-expanded="ariaExpanded"
-    :aria-haspopup="ariaHaspopup"
-    :aria-owns="ariaOwns"
-  >
-    <slot />
-  </el-only-child>
-</template>
-
 <script lang="ts" setup>
 import { computed, inject, onMounted, watch } from 'vue'
 import { unrefElement } from '@vueuse/core'
@@ -21,12 +7,12 @@ import { POPPER_INJECTION_KEY } from '@element-plus/tokens'
 import { isElement } from '@element-plus/utils'
 import { usePopperTriggerProps } from './trigger'
 
+const props = defineProps(usePopperTriggerProps)
+
 defineOptions({
   name: 'ElPopperTrigger',
   inheritAttrs: false,
 })
-
-const props = defineProps(usePopperTriggerProps)
 
 const { role, triggerRef } = inject(POPPER_INJECTION_KEY, undefined)!
 
@@ -111,3 +97,17 @@ defineExpose({
   triggerRef,
 })
 </script>
+
+<template>
+  <el-only-child
+    v-if="!virtualTriggering"
+    v-bind="$attrs"
+    :aria-controls="ariaControls"
+    :aria-describedby="ariaDescribedby"
+    :aria-expanded="ariaExpanded"
+    :aria-haspopup="ariaHaspopup"
+    :aria-owns="ariaOwns"
+  >
+    <slot />
+  </el-only-child>
+</template>

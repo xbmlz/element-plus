@@ -1,3 +1,35 @@
+<script lang="ts" setup>
+import { getCurrentInstance, inject, ref } from 'vue'
+import ElIcon from '@element-plus/components/icon'
+import { breadcrumbKey } from '@element-plus/tokens'
+import { useNamespace } from '@element-plus/hooks'
+import { breadcrumbItemProps } from './breadcrumb-item'
+
+import type { Router } from 'vue-router'
+import type { BreadcrumbProps } from './breadcrumb'
+
+const props = defineProps(breadcrumbItemProps)
+
+defineOptions({
+  name: 'ElBreadcrumbItem',
+})
+
+const instance = getCurrentInstance()!
+const router = instance.appContext.config.globalProperties.$router as Router
+const breadcrumbInjection = inject(breadcrumbKey, {} as BreadcrumbProps)!
+
+const ns = useNamespace('breadcrumb')
+
+const { separator, separatorIcon } = breadcrumbInjection
+
+const link = ref<HTMLSpanElement>()
+
+const onClick = () => {
+  if (!props.to || !router) return
+  props.replace ? router.replace(props.to) : router.push(props.to)
+}
+</script>
+
 <template>
   <span :class="ns.e('item')">
     <span
@@ -16,35 +48,3 @@
     </span>
   </span>
 </template>
-
-<script lang="ts" setup>
-import { getCurrentInstance, inject, ref } from 'vue'
-import ElIcon from '@element-plus/components/icon'
-import { breadcrumbKey } from '@element-plus/tokens'
-import { useNamespace } from '@element-plus/hooks'
-import { breadcrumbItemProps } from './breadcrumb-item'
-
-import type { Router } from 'vue-router'
-import type { BreadcrumbProps } from './breadcrumb'
-
-defineOptions({
-  name: 'ElBreadcrumbItem',
-})
-
-const props = defineProps(breadcrumbItemProps)
-
-const instance = getCurrentInstance()!
-const router = instance.appContext.config.globalProperties.$router as Router
-const breadcrumbInjection = inject(breadcrumbKey, {} as BreadcrumbProps)!
-
-const ns = useNamespace('breadcrumb')
-
-const { separator, separatorIcon } = breadcrumbInjection
-
-const link = ref<HTMLSpanElement>()
-
-const onClick = () => {
-  if (!props.to || !router) return
-  props.replace ? router.replace(props.to) : router.push(props.to)
-}
-</script>
